@@ -45,6 +45,9 @@ Ensure you have the following software installed on your system before proceedin
 
 ``` ./start-all ```
 
+*** 
+    Important: Rmember, you need to start Docker Engine before running above command. 
+***
 
 ## Project Components
 
