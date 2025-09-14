@@ -1,11 +1,15 @@
 package com.ali.school;
 
 import com.ali.school.client.StudentClient;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,9 +22,32 @@ public class SchoolService {
         repository.save(student);
     }
 
-    public List<School> findAllSchools()
+    public School findSchoolById(Integer id)
     {
-        return repository.findAll();
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("School not found"));
+    }
+
+    public  School view(Integer id)
+    {
+        return findSchoolById(id);
+    }
+
+    public School updateSchool(Integer id, School school) {
+        School schoolRecord = findSchoolById(id);
+        schoolRecord.setName(school.name);
+        return repository.save(schoolRecord);
+    }
+
+    public void deleteSchool(Integer id)
+    {
+        School school = findSchoolById(id);
+        repository.delete(school);
+    }
+
+    public Page<School> findAllSchools(Pageable page)
+    {
+        return repository.findAll(page);
     }
 
     public FullSchoolResponse findAllSchoolsWithStudents(Integer schoolId)

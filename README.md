@@ -13,8 +13,10 @@ This repository contains project showcasing a microservices-based application, d
     - [API Gateway](#api-gateway)
     - [Config Server](#config-server)
     - [Discovery Server](#discovery-server)
+    - [Auth Server](#auth-server)
     - [Student Microservice](#student-microservice)
     - [School Microservice](#school-microservice)
+    - [Client Application](#client-application)
 - [Inter-Service Communication](#inter-service-communication)
     - [Using OpenFeign](#using-openfeign)
 - [Distributed Tracing](#distributed-tracing)
@@ -34,16 +36,21 @@ Ensure you have the following software installed on your system before proceedin
 
 - Java Development Kit (JDK) 17 or later
 - Maven
-- Docker (optional, for containerization)
+- Docker
 
 ### Installation
 
 1. Clone the repository
-2. Navigate to the project directory
-3. Build and package each component with Maven
+2. In the main project folder run command: 
+
+``` ./start-all ```
 
 
 ## Project Components
+
+### Auth Server
+
+We are using KeyCloak in Auth Server. It supports OpenID Connect (OIDC), a protocol built on OAuth 2.0 for authentication and authorization. OIDC allows applications to verify user identities and obtain profile information in a secure manner.
 
 ### API Gateway
 
@@ -71,17 +78,26 @@ The School Microservice manages school-related data and operations, including ad
 
 This project demonstrates inter-service communication using OpenFeign, a declarative REST client that simplifies service-to-service communication within the microservices ecosystem.
 
+## Client Application
+we are displaying views in React.
+
 ## Distributed Tracing
 
 ### Using Zipkin
 
 The project showcases the use of Zipkin for distributed tracing, enhancing application observability and enabling the visualization and troubleshooting of latency issues.
 
+## React Application:
 
-**Note:** To run Zipkin, you need to install [Docker Desktop](https://www.docker.com/products/docker-desktop/) \
-Use Command:\
-``` docker-compose up```
-![Zipkin](/images/zipkin.png)
+### Login
+![](/images/react-login.png)
+
+
+### School Page
+![](/images/react-school.png)
+
+### Student Page
+![](/images/react-student.png)
 
 
 ### Postman API Testing:

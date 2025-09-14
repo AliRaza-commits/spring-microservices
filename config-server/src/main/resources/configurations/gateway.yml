@@ -6,8 +6,20 @@ server:
 spring:
   application:
     name: gateway
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/microservice
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: 'http://localhost:3000'
+            allowedHeaders: "*"
+            allowCredentials: true
+            allowedMethods: "*"
       discovery:
         locator:
           enabled: true
@@ -16,12 +28,43 @@ spring:
           uri: http://localhost:8090/api/v1
           predicates:
             - Path=/api/v1/students/**
+          filters:
+           - TokenRelay=
         - id: schools
           uri: http://localhost:8070
           predicates:
             - Path=/api/v1/schools/**
-
+          filters:
+            - TokenRelay=
+        - id: mvc_routes
+          uri: http://localhost:8090
+          predicates:
+            - Path=/portal/**
+        - id: login_routes
+          uri: http://localhost:8090
+          predicates:
+            - Path=/login/**
+        - id: logout_routes
+          uri: http://localhost:8090
+          predicates:
+            - Path=/logout/**
+logging:
+  level:
+    org:
+      springframework:
+        security=DEBUG:
 management:
   tracing:
-    sampling:
-      probability: 1.0
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"   # Expose all endpoints
+  endpoint:
+    gateway:
+      enabled: true
+  web:
+    exposure:
+      include: "*"
+
+
