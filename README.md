@@ -45,11 +45,27 @@ Ensure you have the following software installed on your system before proceedin
 
 ``` ./start-all ```
 
-*** 
-    Important: Rmember, you need to start Docker Engine before running above command. 
-***
+> [!NOTE]
+> Important: Rmember, you need to start Docker Engine before running above command. 
+
 
 ## Project Components
+
+### KeyCloak Admin
+
+1 - You can login as Admin to keycloak using:
+>**URL:** `http://localhost:9090/` \
+>**Username/Password:** `admin`
+
+2 - Create Realm:\
+**name:** `microservice`
+
+3 - Create Client:\
+`frontend`
+
+Add Following details for Client:
+![](/images/keycloak-details.png)
+
 
 ### Auth Server
 
