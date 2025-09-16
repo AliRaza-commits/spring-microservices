@@ -1,8 +1,7 @@
-import React, { JSXElementConstructor, ReactElement, useEffect, useState } from 'react';
-import { DataGrid, GridActionsCellItem, GridActionsCellItemProps, GridColDef, GridPaginationModel, GridRowParams, GridSortModel } from '@mui/x-data-grid';
+import React, { useEffect, useState } from 'react';
+import { DataGrid, GridColDef, GridPaginationModel, GridSortModel } from '@mui/x-data-grid';
 import { Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { Edit, EditAttributes } from '@mui/icons-material';
 import { fetchCall } from '../helpers/fetchCall';
 
 interface RowDef {

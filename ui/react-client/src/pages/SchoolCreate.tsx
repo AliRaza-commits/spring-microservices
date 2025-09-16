@@ -1,5 +1,5 @@
-import { Alert, Box, Button, Card, CardContent, Divider, Grid, Grid2, TextField, Typography } from "@mui/material";
-import { Formik, useFormik } from "formik";
+import { Alert, Box, Button, Card, CardContent, Divider, Grid, TextField, Typography } from "@mui/material";
+import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { fetchCall } from "../helpers/fetchCall";
 import { useEffect, useState } from "react";
@@ -124,7 +124,7 @@ const SchoolCreate = ({ type }: SchoolProp ) => {
             }
         }
 
-        if (type == 'edit') {
+        if (type === 'edit') {
             showData();
         }
     },[]);
@@ -139,7 +139,7 @@ const SchoolCreate = ({ type }: SchoolProp ) => {
         },
         validationSchema,
         onSubmit: async () => {
-        if (type == 'edit') {
+        if (type === 'edit') {
            setUpdating(true);
         } else {
             setCreating(true);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DataGrid, GridColDef, GridPaginationModel, GridSortModel, renderActionsCell } from '@mui/x-data-grid';
+import { DataGrid, GridPaginationModel, GridSortModel } from '@mui/x-data-grid';
 import { Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { fetchCall } from '../helpers/fetchCall';

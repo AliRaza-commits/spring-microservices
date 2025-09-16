@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Navbar from './Components/Navbar';
 import Sidebar from './Components/Sidebar';
-import DetailPage from './Components/DetailPage';
+//import DetailPage from './Components/DetailPage';
 import Box from '@mui/material/Box';
-import { BrowserRouter, Route, Router, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import SchoolDetail from './pages/School';
 import StudenDetail from './pages/Student';
 import { useAuth } from './hooks/useAuth';
@@ -14,7 +14,7 @@ import StudentCreate from './pages/StudentCreate';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState('Inbox'); // Default item
+  // const [selectedItem, setSelectedItem] = useState('Inbox'); // Default item
   const navigate = useNavigate();
   const auth = useAuth();
   const isAuthenticated = auth?.isAuthenticated ?? false;
@@ -28,7 +28,7 @@ function App() {
   };
 
   const handleItemClick = (item: string, path: string) => {
-    setSelectedItem(item);
+    // setSelectedItem(item);
     setIsSidebarOpen(false);
     navigate(path);
   };

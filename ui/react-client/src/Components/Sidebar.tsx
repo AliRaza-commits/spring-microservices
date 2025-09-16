@@ -5,9 +5,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/Inbox';
-import MailIcon from '@mui/icons-material/Mail';
-import * as Icon from '@mui/icons-material';
+// import InboxIcon from '@mui/icons-material/Inbox';
+// import MailIcon from '@mui/icons-material/Mail';
+// import * as Icon from '@mui/icons-material';
 import { CircularProgress } from '@mui/material';
 
 interface SidebarProps {
