@@ -26,7 +26,7 @@ jobs:
 
     - name: Build All services
       run: |
-        for dir in auth-server config-server discovery gateway school student
+        for dir in auth-server config-server discovery gateway school student; do
           cd $dir 
           mvn clean install
         done
