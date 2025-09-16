@@ -13,6 +13,34 @@ jobs:
       docker: 
         image: docker:20.10.7
         options: --privileged
+      
+      postgres-school:
+        image: postgres:15
+        container_name: postgres-school-db
+        environment:
+          POSTGRES_DB: schools
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: Abc@12345
+        ports: 
+          - "3306:3306"
+        volumes:
+          - school_pgdata: /var/lib/postgresql/data
+      
+      postgres-student:
+        image: postgres:15
+        container_name: postgres-student-db
+        environment:
+          POSTGRES_DB: students
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: Abc@12345
+        ports:
+         - "3306:3306"
+        volumes:
+         - student_pgdata: /var/lib/postgresql/data
+      
+      volumes:
+        school_pgdata:
+        student_pgdata:
 
     steps:
     - name : Checkout code
