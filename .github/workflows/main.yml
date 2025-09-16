@@ -28,7 +28,7 @@ jobs:
       run: |
         for dir in auth-server config-server discovery gateway school student; do
           cd $dir 
-          mvn clean 
+          mvn clean install
           cd ..
         done
 
