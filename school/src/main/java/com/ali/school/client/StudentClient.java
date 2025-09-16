@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-@FeignClient(name = "student-client", url = "${spring.application.studenturl}")
+//, url = "${spring.application.studenturl}"
+@FeignClient(name = "student-client")
 public interface StudentClient {
     @PostMapping("/school/{school-id}")
     public List<Student> findStudentBySchoolId(@PathVariable("school-id") Integer schoolId);
