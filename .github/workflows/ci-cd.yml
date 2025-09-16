@@ -26,13 +26,14 @@ jobs:
 
     - name: Build All services
       run: |
-      for dir in auth-server config-server discovery gateway school student
-        cd $dir 
-        mvn clean install
-        done
+        for dir in auth-server config-server discovery gateway school student
+          cd $dir 
+          mvn clean install
+          done
+
     - name: Build React client
       run: |
-      cd ui/react-client
-      npm install
-      npm build
-      done
+        cd ui/react-client
+        npm install
+        npm build
+        done
