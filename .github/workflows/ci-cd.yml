@@ -28,11 +28,12 @@ jobs:
       run: |
         for dir in auth-server config-server discovery gateway school student; do
           cd $dir 
-          mvn clean install
+          mvn clean 
+          cd ..
         done
 
     - name: Build React client
       run: |
         cd ui/react-client
         npm install
-        npm build
+        npm run build
