@@ -11,17 +11,35 @@ interface SchoolProp  {
 
 const SchoolCreate = ({ type }: SchoolProp ) => {
     const [isSuccess, setIsSuccess] = useState(false);
-    const [loading,setLoading] = useState(false);
+   // const [loading,setLoading] = useState(false);
     const [creating,setCreating] = useState(false);
     const [updating,setUpdating] = useState(false);
-    
+
     const navigate = useNavigate();
     const { id }  = useParams();
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
 
     interface SchoolSchema {
         name: string
     }
+
+        const validationSchema = Yup.object().shape({
+        name: Yup.string().required('Name is required').min(6)
+    });
+
+    const form = useFormik<SchoolSchema>({
+        initialValues:  {
+            name: ''
+        },
+        validationSchema,
+        onSubmit: async () => {
+        if (type === 'edit') {
+           setUpdating(true);
+        } else {
+            setCreating(true);
+        }
+        }
+    })
 
     useEffect(() => {
         let isMounted = true;
@@ -32,24 +50,24 @@ const SchoolCreate = ({ type }: SchoolProp ) => {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer '+localStorage.getItem('token')
                 };
-                
+
                 const body = JSON.stringify(form?.values);
-                const response = await fetchCall('post',url,headers,body);
-             
+                await fetchCall('post',url,headers,body);
+
                 if (isMounted) {
                     setIsSuccess(true);
                     navigate('/school');
                 }
-    
+
                } catch(error) {
                 if (isMounted) setIsSuccess(false);
                } finally {
                 if (isMounted) {
                     setCreating(false);
-                    setLoading(false);
+                 //   setLoading(false);
                 }
-               
-               }
+
+            }
         }
 
         if(creating) {
@@ -59,11 +77,11 @@ const SchoolCreate = ({ type }: SchoolProp ) => {
         return () => {
             isMounted = false;
         }
-    },[creating]);
+    },[creating,form.values, navigate]);
 
     useEffect(() => {
         let isMounted = true;
-          
+
         const updateData = async () => {
             try {
                   const headers = {
@@ -71,25 +89,25 @@ const SchoolCreate = ({ type }: SchoolProp ) => {
                     'Authorization': 'Bearer '+localStorage.getItem('token')
                   };
                   const body = JSON.stringify(form.values);
-                  const result = await fetchCall('put', `${process.env.REACT_APP_GATEWAY_URL}/api/v1/schools/edit/${id}`,
+                  await fetchCall('put', `${process.env.REACT_APP_GATEWAY_URL}/api/v1/schools/edit/${id}`,
                     headers,
                     body
                   )
 
                   if (isMounted) {
-                    setData(result.content);
+                    // setData(result.content);
                     setIsSuccess(true);
                   }
-    
+
             } catch(error) {
                 if (isMounted) {
                     setIsSuccess(false);
                 }
-                
+
             } finally {
                 if (isMounted) {
                     setUpdating(false);
-                    setLoading(false);
+                 //   setLoading(false);
                 }
             }
         }
@@ -101,8 +119,7 @@ const SchoolCreate = ({ type }: SchoolProp ) => {
         return () => {
             isMounted = false;
         }
-    
-    },[updating]);
+    },[updating,form.values,id]);
 
 
     useEffect(() => {
@@ -127,30 +144,7 @@ const SchoolCreate = ({ type }: SchoolProp ) => {
         if (type === 'edit') {
             showData();
         }
-    },[]);
-
-    const validationSchema = Yup.object().shape({
-        name: Yup.string().required('Name is required').min(6)
-    });
-
-    const form = useFormik<SchoolSchema>({
-        initialValues:  {
-            name: ''
-        },
-        validationSchema,
-        onSubmit: async () => {
-        if (type === 'edit') {
-           setUpdating(true);
-        } else {
-            setCreating(true);
-        }
-        
-        }
-    })
-
-
-
-
+    },[id,form,type, navigate,form.values]);
 
     return (
         <Box sx={{
@@ -164,7 +158,7 @@ const SchoolCreate = ({ type }: SchoolProp ) => {
                     <Typography sx={{ textAlign: 'center', alignItems: 'center' }} variant="h5">School</Typography>
                     <Button variant="contained" onClick={() => navigate('/school')} >List</Button>
                     </Grid>
-                    
+
                     {isSuccess && (
                     <Alert severity="success">Record saved Successfully</Alert>
                     )}

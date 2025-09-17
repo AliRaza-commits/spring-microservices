@@ -24,7 +24,7 @@ const StudentDetail = () => {
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    let isMounted = true;
+    // let isMounted = true;
     const deleteData = async() => {
       try {
         const headers = {
@@ -32,11 +32,10 @@ const StudentDetail = () => {
           'Authorization': 'Bearer '+localStorage.getItem('token')
         };
         const body:any = [];
-        const resposne = await fetchCall('delete', `${process.env.REACT_APP_GATEWAY_URL}/api/v1/students/delete/${id}`,
+        await fetchCall('delete', `${process.env.REACT_APP_GATEWAY_URL}/api/v1/students/delete/${id}`,
           headers,
           body
         )
-        
       } catch(error) {
         console.log(error);
       } finally {
@@ -48,11 +47,11 @@ const StudentDetail = () => {
     if (deleting) {
       deleteData()
     }
-    return () => {
-      isMounted = false;
-    }
+    // return () => {
+    //   isMounted = false;
+    // }
     
-  },[deleting])
+  },[deleting,id])
 
   const deleteData = (id: string) => {
     setDeleting(true);

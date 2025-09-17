@@ -33,7 +33,7 @@ const SchoolDetail = () => {
             'Authorization': 'Bearer '+localStorage.getItem('token')
           };
           const body:any = [];
-          const result = await fetchCall('delete',
+          await fetchCall('delete',
             `${process.env.REACT_APP_GATEWAY_URL}/api/v1/schools/delete/${id}`,
             headers,
             body

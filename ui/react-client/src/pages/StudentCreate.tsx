@@ -11,19 +11,41 @@ interface StudentProp  {
 
 const StudentCreate = ({ type }: StudentProp ) => {
     const [isSuccess, setIsSuccess] = useState(false);
-    const [loading,setLoading] = useState(false);
+//    const [loading,setLoading] = useState(false);
     const [creating,setCreating] = useState(false);
     const [updating,setUpdating] = useState(false);
-    
+
     const navigate = useNavigate();
     const { id }  = useParams();
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
 
     interface studentchema {
         firstName: string,
         lastName: string,
         email: string
     }
+
+    const validationSchema = Yup.object().shape({
+        firstName: Yup.string().required('First Name is required').min(3),
+        lastName: Yup.string().required('Last Name is required').min(3),
+        email: Yup.string().required('Email is required').min(6)
+    });
+
+    const form = useFormik<studentchema>({
+        initialValues:  {
+            firstName: '',
+            lastName: '',
+            email: ''
+        },
+        validationSchema,
+        onSubmit: async () => {
+        if (type === 'edit') {
+         setUpdating(true);
+        } else {
+           setCreating(true);
+        }
+        }
+    })
 
     useEffect(() => {
         let isMounted = true;
@@ -34,23 +56,23 @@ const StudentCreate = ({ type }: StudentProp ) => {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer '+localStorage.getItem('token')
                 };
-                
+
                 const body = JSON.stringify(form?.values);
-                const response = await fetchCall('post',url,headers,body);
-             
+                await fetchCall('post',url,headers,body);
+
                 if (isMounted) {
                     setIsSuccess(true);
                     navigate('/student');
                 }
-    
+
                } catch(error) {
                 if (isMounted) setIsSuccess(false);
                } finally {
                 if (isMounted) {
                     setCreating(false);
-                    setLoading(false);
+                    // setLoading(false);
                 }
-               
+
                }
         }
 
@@ -61,11 +83,11 @@ const StudentCreate = ({ type }: StudentProp ) => {
         return () => {
             isMounted = false;
         }
-    },[creating]);
+    },[creating,navigate,form]);
 
     useEffect(() => {
         let isMounted = true;
-          
+
         const updateData = async () => {
             try {
                   const headers = {
@@ -80,20 +102,20 @@ const StudentCreate = ({ type }: StudentProp ) => {
 
                   console.log(result);
                   if (isMounted) {
-                    setData(result.content);
+                    // setData(result.content);
                     setIsSuccess(true);
                   }
-    
+
             } catch(error) {
                 if (isMounted) {
                     console.log(error);
                     setIsSuccess(false);
                 }
-                
+
             } finally {
                 if (isMounted) {
                     setUpdating(false);
-                    setLoading(false);
+               //     setLoading(false);
                 }
             }
         }
@@ -105,8 +127,7 @@ const StudentCreate = ({ type }: StudentProp ) => {
         return () => {
             isMounted = false;
         }
-    
-    },[updating]);
+    },[updating,form,id]);
 
 
     useEffect(() => {
@@ -133,29 +154,8 @@ const StudentCreate = ({ type }: StudentProp ) => {
         if (type === 'edit') {
             showData();
         }
-    },[]);
+    },[form,id,type]);
 
-    const validationSchema = Yup.object().shape({
-        firstName: Yup.string().required('First Name is required').min(3),
-        lastName: Yup.string().required('Last Name is required').min(3),
-        email: Yup.string().required('Email is required').min(6)
-    });
-
-    const form = useFormik<studentchema>({
-        initialValues:  {
-            firstName: '',
-            lastName: '',
-            email: ''
-        },
-        validationSchema,
-        onSubmit: async () => {
-        if (type === 'edit') {
-         setUpdating(true);
-        } else {
-           setCreating(true);
-        }
-        }
-    })
 
     return (
         <Box sx={{
@@ -169,7 +169,7 @@ const StudentCreate = ({ type }: StudentProp ) => {
                     <Typography sx={{ textAlign: 'center', alignItems: 'center' }} variant="h5">Student</Typography>
                     <Button variant="contained" onClick={() => navigate('/student')} >List</Button>
                     </Grid>
-                    
+
                     {isSuccess && (
                     <Alert severity="success">Record saved Successfully</Alert>
                     )}
