@@ -13,6 +13,7 @@ import org.springframework.web.servlet.function.EntityResponse;
 import java.util.List;
 import java.util.Map;
 
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/schools")
