@@ -4,6 +4,8 @@
 
 This repository contains project showcasing a microservices-based application, designed to provide a hands-on understanding of microservices architecture and implementation. The project consists of an API Gateway, Config Server, Discovery Server, and two microservices: Student and School.
 
+[![CI/CD Pipeline](https://github.com/AliRaza-commits/spring-microservices/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/AliRaza-commits/spring-microservices/actions/workflows/ci-cd.yml)
+
 ## Table of Contents
 
 - [Getting Started](#getting-started)
